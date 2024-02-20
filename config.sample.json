@@ -1,0 +1,12 @@
+{
+  "env": "local",
+  "name": "Komeet",
+  "api_port": 9000,
+
+  "logs": {
+    "max_backups": 7,
+    "max_size": 50,
+    "max_days": 7,
+    "compress": true
+  }
+}
