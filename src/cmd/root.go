@@ -29,28 +29,38 @@ func Execute() {
 	gin.SetMode(apiMode)
 	router := gin.Default()
 
+	registerGlobalMiddlewares(&router)
+	registerSPARoute(&router)
+	registerHealthRoute(&router)
+	// Register Application Routes
+	registerFallbackRoutes(&router)
+
+	router.Run(fmt.Sprintf(`:%d`, Config.ApiPort))
+}
+
+func registerGlobalMiddlewares(router **gin.Engine) {
+	(*router).Use(core.LoggerMiddleware)
+}
+
+func registerSPARoute(router **gin.Engine) {
 	// Serve Vue SPA
 	spaLocation := "./dist/web"
 	if Config.IsProduction() {
 		spaLocation = "./web" // For Production, only the dist folder should be used
 	}
-	router.Use(static.Serve("/", static.LocalFile(spaLocation, false)))
+	(*router).Use(static.Serve("/", static.LocalFile(spaLocation, false)))
+}
 
-	// Global Middlewares
-	router.Use(core.LoggerMiddleware)
+func registerHealthRoute(router **gin.Engine) {
+	(*router).GET("/health", common.Health)
+}
 
-	// Health Route
-	router.GET("/health", common.Health)
-
-	// Application Routes
-
+func registerFallbackRoutes(router **gin.Engine) {
 	// Fallback API Route
-	router.Any("/api/:any", common.NotFound)
+	(*router).Any("/api/:any", common.NotFound)
 
-	// Fallback Route for Vue to handle
-	router.NoRoute(func(c *gin.Context) {
+	// Fallback SPA Route
+	(*router).NoRoute(func(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/")
 	})
-
-	router.Run(fmt.Sprintf(`:%d`, Config.ApiPort))
 }
