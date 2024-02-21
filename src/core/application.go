@@ -49,7 +49,7 @@ func loadConfigs() {
 			err = sonic.Unmarshal(b, &App.Config)
 		}
 		if err != nil {
-			logger.Fatal().Err(err).Msg("Loading Config")
+			logger.Panic().Err(err).Msg("Loading Config")
 		}
 	}
 	{
@@ -58,7 +58,7 @@ func loadConfigs() {
 			err = sonic.Unmarshal(b, &App.Secrets)
 		}
 		if err != nil {
-			logger.Fatal().Err(err).Msg("Loading Secrets")
+			logger.Panic().Err(err).Msg("Loading Secrets")
 		}
 	}
 }

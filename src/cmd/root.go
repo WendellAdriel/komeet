@@ -13,6 +13,6 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	logger := App.Logger()
 	if err := rootCmd.Execute(); err != nil {
-		logger.Fatal().Err(err).Msg("root execute")
+		logger.Panic().Err(err).Msg("root execute")
 	}
 }

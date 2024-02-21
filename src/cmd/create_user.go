@@ -37,7 +37,7 @@ func createUser(cmd *cobra.Command, args []string) {
 
 	App.DB.Where("email = ?", userEmail).First(&user)
 	if user.ID > 0 {
-		logger.Fatal().Msgf("User with email %s already exists", userEmail)
+		logger.Panic().Msgf("User with email %s already exists", userEmail)
 	}
 
 	user = auth.NewUser(userName, userEmail, userPassword)
@@ -47,7 +47,7 @@ func createUser(cmd *cobra.Command, args []string) {
 
 	result := App.DB.Create(&user)
 	if result.Error != nil {
-		logger.Fatal().Err(result.Error).Msgf("Failed creating user %s (%s)", userName, userEmail)
+		logger.Panic().Err(result.Error).Msgf("Failed creating user %s (%s)", userName, userEmail)
 	}
 
 	logger.Info().Msgf("User %s (%s) created", userName, userEmail)

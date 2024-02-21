@@ -21,6 +21,6 @@ func initDatabase() {
 
 	App.DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		logger.Fatal().Msgf("Error opening MySQL %s DB", App.Secrets.DB.Name)
+		logger.Panic().Msgf("Error opening MySQL %s DB", App.Secrets.DB.Name)
 	}
 }

@@ -24,7 +24,7 @@ func NewToken(userUuid string) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signed, err := token.SignedString(App.Secrets.JWTKey)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to generate JWT")
+		logger.Panic().Err(err).Msg("Failed to generate JWT")
 	}
 
 	return signed

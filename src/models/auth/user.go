@@ -26,7 +26,7 @@ func NewUser(name, email, password string) User {
 
 	passwordHash, err := hashPassword(password)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Error hashing password")
+		logger.Panic().Err(err).Msg("Error hashing password")
 	}
 
 	return User{
