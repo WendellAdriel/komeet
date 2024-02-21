@@ -15,6 +15,7 @@ type User struct {
 	Email           string
 	EmailVerifiedAt *time.Time
 	Password        string
+	Active          bool `gorm:"default:false"`
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 	DeletedAt       gorm.DeletedAt `gorm:"index"`

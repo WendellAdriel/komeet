@@ -33,7 +33,6 @@ func (a *Application) Init() {
 
 	loadConfigs()
 	initDatabase()
-	migrateDatabase()
 	initRouter()
 }
 

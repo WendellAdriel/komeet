@@ -19,3 +19,6 @@ build: ## Builds the application
 
 run: ## Runs the application
 	./dist/komeet serve
+
+create-user: ## Creates a new user for the application
+	./dist/komeet create-user --name="$(NAME)" --email=$(EMAIL) --password=$(PASSWORD)

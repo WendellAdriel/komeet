@@ -26,6 +26,14 @@ Copy the configuration files from the sample ones with the command below and upd
 make configure
 ```
 
+### Creating Users
+
+**Komeet** ships with a `create-user` command for creating users to the application (great for dev envs):
+
+```bash
+make create-user NAME="John Doe" EMAIL=johndoe@example.com PASSWORD=secret
+```
+
 ## Building the application
 
 ```bash
