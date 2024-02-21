@@ -9,7 +9,7 @@ configure: ## Setup the application for the first time
 
 build: ## Builds the application
 	rm -rf dist \
-	&& mkdir dist \
+	&& mkdir -p dist/logs \
 	&& cd src \
 	&& go build -ldflags "-w -s" -o ../dist/komeet . \
 	&& chmod +x ../dist/komeet \

@@ -1,8 +1,7 @@
 <div align="center">
     <h1>Komeet ☄️</h1>
+    <p><strong>API Template built with Go and Gin</strong></p>
 </div>
-
-**Komeet** is an API Template using **Go** and **Gin**. 
 
 ## Using the Template
 
@@ -27,14 +26,6 @@ make configure
 This will copy the configuration files from the sample ones.
 Make sure to update the configuration files with the needed values.
 
-### Creating Users
-
-**Komeet** ships with a `create-user` command for creating users to the application (great for dev envs):
-
-```bash
-make create-user NAME="John Doe" EMAIL=johndoe@example.com PASSWORD=secret
-```
-
 ## Building the application
 
 ```bash
@@ -47,7 +38,15 @@ make build
 make run
 ```
 
-## Setting the CI/CD
+## Creating Users
+
+**Komeet** ships with a `create-user` command for creating users to the application (great for dev envs):
+
+```bash
+make create-user NAME="John Doe" EMAIL=johndoe@example.com PASSWORD=secret
+```
+
+## Setting a CI/CD Pipeline
 
 For non-local envs, you'll need only the content from the `dist` folder to be added to your server/container.
 These are the steps for setting a CI/CD pipeline for **Komeet** applications:
@@ -56,7 +55,7 @@ These are the steps for setting a CI/CD pipeline for **Komeet** applications:
 
 2 - Place the contents of the `dist` folder in your server/container.
 
-3 - Add the `config.json` and `secrets.json` files to be in the same folder as the generated binary.
+3 - Add the `config.json` and `secrets.json` files to the same folder from point 2.
 
 4 - Run the `./komeet serve` command. 
 
