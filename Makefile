@@ -6,9 +6,6 @@ help:
 configure: ## Setup the application for the first time
 	cp config.sample.json config.json \
 	&& cp secrets.sample.json secrets.json \
-	&& cd web \
-	&& yarn \
-	&& cd ../
 
 build: ## Builds the application
 	rm -rf dist \
@@ -16,9 +13,6 @@ build: ## Builds the application
 	&& cd src \
 	&& go build -ldflags "-w -s" -o ../dist/komeet . \
 	&& chmod +x ../dist/komeet \
-	&& cd ../web \
-	&& yarn build \
-	&& mv dist ../dist/web
 
 run: ## Runs the application
 	./dist/komeet serve

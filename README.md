@@ -2,7 +2,7 @@
     <h1>Komeet ☄️</h1>
 </div>
 
-**Komeet** is a Full-Stack Web App Template using **Go** for the API part and **Vue 3** for the UI. 
+**Komeet** is an API Template using **Go** and **Gin**. 
 
 ## Using the Template
 
@@ -24,7 +24,7 @@ git clone git@github.com:WendellAdriel/komeet.git my-app && cd my-app && rm -rf 
 make configure
 ```
 
-This will copy the configuration files from the sample ones and install the Front-end dependencies.
+This will copy the configuration files from the sample ones.
 Make sure to update the configuration files with the needed values.
 
 ### Creating Users

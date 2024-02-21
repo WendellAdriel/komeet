@@ -17,9 +17,7 @@ func init() {
 }
 
 func serve(cmd *cobra.Command, args []string) {
-	apiRoutes := App.Router.Group("/api")
-
-	auth.RegisterRoutes(&apiRoutes)
+	auth.RegisterRoutes()
 	// Register your application routes here before running the application
 	App.Run()
 }

@@ -1,7 +1,6 @@
 package core
 
 import (
-	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"runtime"
@@ -21,21 +20,12 @@ func initRouter() {
 	App.Router = gin.Default()
 
 	registerGlobalMiddlewares()
-	registerSPARoute()
 	registerHealthRoute()
-	registerFallbackRoutes()
+	registerFallbackRoute()
 }
 
 func registerGlobalMiddlewares() {
 	App.Router.Use(loggerMiddleware)
-}
-
-func registerSPARoute() {
-	spaLocation := "./dist/web"
-	if !App.IsLocal() {
-		spaLocation = "./web" // For Non-local envs, only the dist folder should be used
-	}
-	App.Router.Use(static.Serve("/", static.LocalFile(spaLocation, false)))
 }
 
 func registerHealthRoute() {
@@ -57,16 +47,10 @@ func registerHealthRoute() {
 	})
 }
 
-func registerFallbackRoutes() {
-	// API fallback route
-	App.Router.Any("/api/:any", func(c *gin.Context) {
+func registerFallbackRoute() {
+	App.Router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"status": "Not Found",
 		})
-	})
-
-	// SPA fallback route
-	App.Router.NoRoute(func(c *gin.Context) {
-		c.Redirect(http.StatusFound, "/")
 	})
 }

@@ -1,13 +1,13 @@
 package auth
 
 import (
-	"github.com/gin-gonic/gin"
+	. "komeet/core"
 )
 
-func RegisterRoutes(router **gin.RouterGroup) {
-	(*router).POST("login", login)
-	(*router).POST("logout", logout)
+func RegisterRoutes() {
+	App.Router.POST("login", login)
+	App.Router.POST("logout", logout)
 
-	(*router).GET("me", profile)
-	(*router).PUT("me", editProfile)
+	App.Router.GET("me", profile)
+	App.Router.PUT("me", editProfile)
 }
