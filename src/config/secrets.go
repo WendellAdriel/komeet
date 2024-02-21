@@ -1,7 +1,8 @@
 package config
 
 type Secrets struct {
-	DB DBCreds `json:"db"`
+	JWTKey string  `json:"jwt_key"`
+	DB     DBCreds `json:"db"`
 }
 
 type DBCreds struct {

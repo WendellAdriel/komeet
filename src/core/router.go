@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"runtime"
@@ -26,24 +27,26 @@ func initRouter() {
 
 func registerGlobalMiddlewares() {
 	App.Router.Use(loggerMiddleware)
+	App.Router.Use(gin.CustomRecovery(errorHandler))
 }
 
 func registerHealthRoute() {
 	App.Router.GET("/health", func(c *gin.Context) {
-		if App.IsLocal() {
-			c.JSON(http.StatusOK, gin.H{
-				"status":    "OK",
-				"name":      App.Config.Name,
-				"env":       App.Config.Env,
-				"version":   runtime.Version(),
-				"timestamp": time.Now().Format(time.RFC1123),
-			})
+		response := gin.H{
+			"status": "OK",
+		}
+
+		if !App.IsLocal() {
+			c.JSON(http.StatusOK, response)
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"status": "OK",
-		})
+		response["name"] = App.Config.Name
+		response["env"] = App.Config.Env
+		response["version"] = runtime.Version()
+		response["timestamp"] = time.Now().Format(time.RFC1123)
+
+		c.JSON(http.StatusOK, response)
 	})
 }
 
@@ -53,4 +56,19 @@ func registerFallbackRoute() {
 			"status": "Not Found",
 		})
 	})
+}
+
+func errorHandler(c *gin.Context, err any) {
+	logger := App.Logger()
+	logger.Error().Msgf("Unknown Error: %v", err)
+
+	response := gin.H{
+		"message": "Internal server error",
+	}
+
+	if !App.IsProduction() {
+		response["error"] = fmt.Sprintf("%v", err)
+	}
+
+	c.AbortWithStatusJSON(http.StatusInternalServerError, response)
 }
