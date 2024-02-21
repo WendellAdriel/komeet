@@ -7,7 +7,7 @@ type Secrets struct {
 type DBCreds struct {
 	Host string `json:"host"`
 	Port int    `json:"port"`
-	DB   string `json:"db"`
+	Name string `json:"name"`
 	User string `json:"user"`
 	Pass string `json:"pass"`
 }

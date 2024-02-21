@@ -1,7 +1,7 @@
 {
-  "env": "local",
-  "name": "Komeet",
-  "api_port": 9000,
+  "app_env": "local",
+  "app_name": "Komeet",
+  "app_port": 9000,
 
   "logs": {
     "max_backups": 7,

@@ -18,4 +18,4 @@ build: ## Builds the application
 	&& mv dist ../dist/web
 
 run: ## Runs the application
-	./dist/komeet
+	./dist/komeet serve

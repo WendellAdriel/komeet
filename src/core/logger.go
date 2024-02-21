@@ -5,7 +5,6 @@ import (
 	"github.com/rs/zerolog"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
-	. "komeet/config"
 	"os"
 	"path"
 	"sync"
@@ -16,7 +15,7 @@ var once sync.Once
 
 var log zerolog.Logger
 
-func Logger() zerolog.Logger {
+func (a *Application) Logger() zerolog.Logger {
 	once.Do(func() {
 		zerolog.TimeFieldFormat = time.RFC3339
 		mw := io.MultiWriter(
@@ -24,7 +23,7 @@ func Logger() zerolog.Logger {
 				Out:        os.Stderr,
 				TimeFormat: time.RFC3339,
 			},
-			newLogRotation(),
+			newLogRotation(a),
 		)
 
 		log = zerolog.New(mw).Level(zerolog.InfoLevel).With().Timestamp().Logger()
@@ -33,12 +32,11 @@ func Logger() zerolog.Logger {
 	return log
 }
 
-func LoggerMiddleware(c *gin.Context) {
+func loggerMiddleware(c *gin.Context) {
 	start := time.Now()
-	l := Logger()
 
 	defer func() {
-		l.Info().
+		log.Info().
 			Str("method", c.Request.Method).
 			Str("url", c.Request.URL.String()).
 			Int("status", c.Writer.Status()).
@@ -50,12 +48,12 @@ func LoggerMiddleware(c *gin.Context) {
 	c.Next()
 }
 
-func newLogRotation() io.Writer {
+func newLogRotation(a *Application) io.Writer {
 	return &lumberjack.Logger{
 		Filename:   path.Join("logs/app.log"),
-		MaxBackups: Config.Logs.MaxBackups,
-		MaxSize:    Config.Logs.MaxSize,
-		MaxAge:     Config.Logs.MaxDays,
-		Compress:   Config.Logs.Compress,
+		MaxBackups: a.Config.Logs.MaxBackups,
+		MaxSize:    a.Config.Logs.MaxSize,
+		MaxAge:     a.Config.Logs.MaxDays,
+		Compress:   a.Config.Logs.Compress,
 	}
 }

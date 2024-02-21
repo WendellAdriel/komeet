@@ -1,11 +1,10 @@
 package config
 
 type Settings struct {
-	Env     string  `json:"env"`
-	Name    string  `json:"name"`
-	ApiPort int     `json:"api_port"`
-	Logs    Logs    `json:"logs"`
-	Secrets Secrets `json:"-"`
+	Env  string `json:"app_env"`
+	Name string `json:"app_name"`
+	Port int    `json:"app_port"`
+	Logs Logs   `json:"logs"`
 }
 
 type Logs struct {
