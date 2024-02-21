@@ -5,7 +5,10 @@ help:
 
 configure: ## Setup the application for the first time
 	cp config.sample.json config.json \
-	&& cp secrets.sample.json secrets.json
+	&& cp secrets.sample.json secrets.json \
+	&& cd web \
+	&& yarn \
+	&& cd ../
 
 build: ## Builds the application
 	rm -rf dist \

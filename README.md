@@ -20,11 +20,12 @@ git clone git@github.com:WendellAdriel/komeet.git my-app && cd my-app && rm -rf 
 
 ## Configuration
 
-Copy the configuration files from the sample ones with the command below and update them with the needed values:
-
 ```bash
 make configure
 ```
+
+This will copy the configuration files from the sample ones and install the Front-end dependencies.
+Make sure to update the configuration files with the needed values.
 
 ### Creating Users
 
