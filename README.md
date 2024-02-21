@@ -47,6 +47,19 @@ make build
 make run
 ```
 
+## Setting the CI/CD
+
+For non-local envs, you'll need only the content from the `dist` folder to be added to your server/container.
+These are the steps for setting a CI/CD pipeline for **Komeet** applications:
+
+1 - Run the `make build` command to generate the `dist` folder.
+
+2 - Place the contents of the `dist` folder in your server/container.
+
+3 - Add the `config.json` and `secrets.json` files to be in the same folder as the generated binary.
+
+4 - Run the `./komeet serve` command. 
+
 ## Credits
 
 - [Wendell Adriel](https://github.com/WendellAdriel)
