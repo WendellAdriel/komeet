@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"komeet/models/auth"
 )
 
 func initDatabase() {
+	logger := App.Logger()
 	var err error
 
 	dsn := fmt.Sprintf(
@@ -20,6 +22,14 @@ func initDatabase() {
 
 	App.DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal().Msgf("Error opening MySQL %s DB", App.Secrets.DB.Name)
+		logger.Fatal().Msgf("Error opening MySQL %s DB", App.Secrets.DB.Name)
+	}
+}
+
+func migrateDatabase() {
+	logger := App.Logger()
+	err := App.DB.AutoMigrate(&auth.User{})
+	if err != nil {
+		logger.Fatal().Err(err).Msgf("Error migrating MySQL %s DB", App.Secrets.DB.Name)
 	}
 }

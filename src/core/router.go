@@ -14,7 +14,8 @@ func initRouter() {
 		apiMode = gin.ReleaseMode
 	}
 
-	log.Printf("Starting the API in port %d for %s mode", App.Config.Port, apiMode)
+	logger := App.Logger()
+	logger.Info().Msgf("Starting the API in port %d for %s mode", App.Config.Port, apiMode)
 
 	gin.SetMode(apiMode)
 	App.Router = gin.Default()
