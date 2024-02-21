@@ -2,7 +2,9 @@ package auth
 
 import (
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	. "komeet/core"
 	"time"
 )
 
@@ -19,15 +21,32 @@ type User struct {
 }
 
 func NewUser(name, email, password string) User {
+	logger := App.Logger()
+
+	passwordHash, err := hashPassword(password)
+	if err != nil {
+		logger.Fatal().Err(err).Msg("Error hashing password")
+	}
+
 	return User{
 		Name:            name,
 		Email:           email,
 		EmailVerifiedAt: nil,
-		Password:        password,
+		Password:        passwordHash,
 	}
+}
+
+func (u *User) CheckPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	return err == nil
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	u.UUID = uuid.NewString()
 	return
+}
+
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
 }
