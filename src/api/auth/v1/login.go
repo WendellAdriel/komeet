@@ -46,5 +46,9 @@ func handleLogin(dto LoginDTO) (string, error) {
 		return "", errors.New("invalid login data")
 	}
 
-	return NewToken(user.UUID), nil
+	token, authUuid := NewToken(user.UUID)
+	user.AuthUUID = &authUuid
+	repositories.UpdateUser(&user)
+
+	return token, nil
 }

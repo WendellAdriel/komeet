@@ -14,6 +14,14 @@ func CreateUser(user *User) {
 	}
 }
 
+func UpdateUser(user *User) {
+	logger := App.Logger()
+	result := App.DB.Save(&user)
+	if result.Error != nil {
+		logger.Panic().Err(result.Error).Msgf("Failed updating user: %v", user)
+	}
+}
+
 func GetUserBy(field string, value any) (User, bool) {
 	var user User
 
