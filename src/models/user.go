@@ -16,7 +16,7 @@ type User struct {
 	EmailVerifiedAt *time.Time
 	Password        string
 	Active          bool `gorm:"default:false"`
-	AuthUUID        *string
+	AuthUUID        string
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 	DeletedAt       gorm.DeletedAt `gorm:"index"`
@@ -34,7 +34,7 @@ func NewUser(name, email, password string) User {
 		Name:            name,
 		Email:           email,
 		EmailVerifiedAt: nil,
-		AuthUUID:        nil,
+		AuthUUID:        "",
 		Password:        passwordHash,
 	}
 }

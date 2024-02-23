@@ -4,6 +4,7 @@
   "app_port": 9000,
 
   "auth": {
+    "token_header": "X-API-KEY",
     "token_validity": 24
   },
 

@@ -1,13 +1,14 @@
 package core
 
 import (
+	"errors"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"time"
 )
 
 type UserClaims struct {
-	UUID     string `json:"uuid"`
+	UserUUID string `json:"user_uuid"`
 	AuthUUID string `json:"auth_uuid"`
 	jwt.RegisteredClaims
 }
@@ -32,4 +33,22 @@ func NewToken(userUuid string) (string, string) {
 	}
 
 	return signed, authUuid
+}
+
+func ParseTokenClaims(token string) (UserClaims, error) {
+	var userClaims UserClaims
+
+	jwtToken, err := jwt.ParseWithClaims(token, &userClaims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(App.Secrets.JWTKey), nil
+	})
+
+	if err != nil {
+		return userClaims, err
+	}
+
+	if !jwtToken.Valid {
+		return userClaims, errors.New("invalid token")
+	}
+
+	return userClaims, nil
 }

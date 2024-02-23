@@ -47,7 +47,7 @@ func handleLogin(dto LoginDTO) (string, error) {
 	}
 
 	token, authUuid := NewToken(user.UUID)
-	user.AuthUUID = &authUuid
+	user.AuthUUID = authUuid
 	repositories.UpdateUser(&user)
 
 	return token, nil

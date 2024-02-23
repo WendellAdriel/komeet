@@ -7,10 +7,12 @@ import (
 
 func RegisterRoutes() {
 	v1Routes := App.Router.Group("v1")
-
 	v1Routes.POST("login", v1.Login)
-	v1Routes.POST("logout", v1.Logout)
 
-	v1Routes.GET("me", v1.Profile)
-	v1Routes.PUT("me", v1.EditProfile)
+	protectedRoutes := v1Routes.Group("/")
+	protectedRoutes.Use(AuthRequired)
+
+	protectedRoutes.POST("logout", v1.Logout)
+	protectedRoutes.GET("me", v1.Profile)
+	protectedRoutes.PUT("me", v1.EditProfile)
 }

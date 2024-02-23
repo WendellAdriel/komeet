@@ -11,6 +11,7 @@ type Settings struct {
 }
 
 type AuthSettings struct {
+	TokenHeader   string        `json:"token_header"`
 	TokenValidity time.Duration `json:"token_validity"`
 }
 
