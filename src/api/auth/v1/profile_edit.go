@@ -9,6 +9,10 @@ import (
 )
 
 type EditProfileDTO struct {
+	Name                 string `json:"name"`
+	CurrentPassword      string `json:"current_password"`
+	NewPassword          string `json:"new_password" binding:"required_with=current_password"`
+	PasswordConfirmation string `json:"password_confirmation" binding:"required_with=new_password"`
 }
 
 func EditProfile(c *gin.Context) {
