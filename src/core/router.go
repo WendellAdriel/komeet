@@ -31,7 +31,7 @@ func registerGlobalMiddlewares() {
 }
 
 func registerHealthRoute() {
-	App.Router.GET("/health", func(c *gin.Context) {
+	App.Router.GET("health", func(c *gin.Context) {
 		response := gin.H{
 			"status": "OK",
 		}

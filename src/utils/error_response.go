@@ -9,10 +9,15 @@ import (
 	"time"
 )
 
-func ErrorResponse(c *gin.Context, code int, err error) {
-	c.JSON(code, gin.H{
-		"message": "Invalid data",
-		"errors":  parseError(err),
+type ApiErrorResponse struct {
+	Message string   `json:"message"`
+	Errors  []string `json:"errors"`
+}
+
+func ErrorResponse(c *gin.Context, code int, message string, err error) {
+	c.JSON(code, ApiErrorResponse{
+		Message: message,
+		Errors:  parseError(err),
 	})
 }
 

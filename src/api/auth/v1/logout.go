@@ -1,11 +1,11 @@
-package auth
+package v1
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func profile(c *gin.Context) {
+func Logout(c *gin.Context) {
 	c.JSON(http.StatusNotImplemented, gin.H{
 		"message": "Not Implemented",
 	})

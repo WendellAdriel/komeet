@@ -1,10 +1,10 @@
-package auth
+package v1
 
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	. "komeet/core"
-	"komeet/models/auth"
+	"komeet/repositories"
 	"komeet/utils"
 	"net/http"
 )
@@ -14,33 +14,31 @@ type LoginDTO struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func login(c *gin.Context) {
+type LoginResponse struct {
+	Token string `json:"token"`
+}
+
+func Login(c *gin.Context) {
 	var dto LoginDTO
 	if err := c.ShouldBind(&dto); err != nil {
-		utils.ErrorResponse(c, http.StatusUnprocessableEntity, err)
+		utils.ErrorResponse(c, http.StatusUnprocessableEntity, "Invalid data", err)
 		return
 	}
 
 	token, err := handleLogin(dto)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusUnprocessableEntity, err)
+		utils.ErrorResponse(c, http.StatusUnprocessableEntity, "The credentials don't match our records", err)
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"token": token,
+	c.JSON(http.StatusOK, LoginResponse{
+		Token: token,
 	})
 }
 
 func handleLogin(dto LoginDTO) (string, error) {
-	var user auth.User
-
-	App.DB.Where("email = ?", dto.Email).
-		Where("email_verified_at IS NOT NULL").
-		Where("active = ?", true).
-		First(&user)
-
-	if user.ID == 0 {
+	user, found := repositories.GetUserForLogin(dto.Email)
+	if !found {
 		return "", errors.New("invalid login data")
 	}
 

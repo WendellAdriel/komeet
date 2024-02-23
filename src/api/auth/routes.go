@@ -1,13 +1,16 @@
 package auth
 
 import (
+	v1 "komeet/api/auth/v1"
 	. "komeet/core"
 )
 
 func RegisterRoutes() {
-	App.Router.POST("login", login)
-	App.Router.POST("logout", logout)
+	v1Routes := App.Router.Group("v1")
 
-	App.Router.GET("me", profile)
-	App.Router.PUT("me", editProfile)
+	v1Routes.POST("login", v1.Login)
+	v1Routes.POST("logout", v1.Logout)
+
+	v1Routes.GET("me", v1.Profile)
+	v1Routes.PUT("me", v1.EditProfile)
 }

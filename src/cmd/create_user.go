@@ -3,7 +3,8 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	. "komeet/core"
-	"komeet/models/auth"
+	"komeet/models"
+	"komeet/repositories"
 	"time"
 )
 
@@ -33,22 +34,17 @@ func init() {
 
 func createUser(cmd *cobra.Command, args []string) {
 	logger := App.Logger()
-	var user auth.User
 
-	App.DB.Where("email = ?", userEmail).First(&user)
-	if user.ID > 0 {
+	user, found := repositories.GetUserBy("email", userEmail)
+	if found {
 		logger.Panic().Msgf("User with email %s already exists", userEmail)
 	}
 
-	user = auth.NewUser(userName, userEmail, userPassword)
+	user = models.NewUser(userName, userEmail, userPassword)
 	now := time.Now()
 	user.EmailVerifiedAt = &now
 	user.Active = true
 
-	result := App.DB.Create(&user)
-	if result.Error != nil {
-		logger.Panic().Err(result.Error).Msgf("Failed creating user %s (%s)", userName, userEmail)
-	}
-
+	repositories.CreateUser(user)
 	logger.Info().Msgf("User %s (%s) created", userName, userEmail)
 }
