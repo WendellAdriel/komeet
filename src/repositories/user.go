@@ -6,9 +6,9 @@ import (
 	. "komeet/models"
 )
 
-func CreateUser(user User) {
+func CreateUser(user *User) {
 	logger := App.Logger()
-	result := App.DB.Create(user)
+	result := App.DB.Create(&user)
 	if result.Error != nil {
 		logger.Panic().Err(result.Error).Msgf("Failed creating user: %v", user)
 	}

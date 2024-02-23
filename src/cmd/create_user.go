@@ -37,7 +37,7 @@ func createUser(cmd *cobra.Command, args []string) {
 
 	user, found := repositories.GetUserBy("email", userEmail)
 	if found {
-		logger.Panic().Msgf("User with email %s already exists", userEmail)
+		logger.Fatal().Msgf("User with email %s already exists", userEmail)
 	}
 
 	user = models.NewUser(userName, userEmail, userPassword)
@@ -45,6 +45,6 @@ func createUser(cmd *cobra.Command, args []string) {
 	user.EmailVerifiedAt = &now
 	user.Active = true
 
-	repositories.CreateUser(user)
+	repositories.CreateUser(&user)
 	logger.Info().Msgf("User %s (%s) created", userName, userEmail)
 }
