@@ -8,17 +8,12 @@ import (
 )
 
 func AuthRequired(c *gin.Context) {
-	logger := App.Logger()
-
 	token := c.GetHeader(App.Config.Auth.TokenHeader)
 	tokenClaims, err := ParseTokenClaims(token)
 	if err != nil {
-		logger.Error().Err(err).Msg("Token not parsed")
 		unauthorizedResponse(c)
 		return
 	}
-
-	logger.Info().Msgf("token claims %v", tokenClaims)
 
 	user, found := repositories.GetUserBy("uuid", tokenClaims.UserUUID)
 	if !found {
