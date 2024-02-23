@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"net/http"
 	"strings"
 	"time"
 )
@@ -18,6 +19,12 @@ func ErrorResponse(c *gin.Context, code int, message string, err error) {
 	c.JSON(code, ApiErrorResponse{
 		Message: message,
 		Errors:  parseError(err),
+	})
+}
+
+func UnauthorizedResponse(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+		"message": "Unauthorized",
 	})
 }
 
