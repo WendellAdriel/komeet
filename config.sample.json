@@ -3,6 +3,10 @@
   "app_name": "Komeet",
   "app_port": 9000,
 
+  "auth": {
+    "token_validity": 24
+  },
+
   "logs": {
     "max_backups": 7,
     "max_size": 50,

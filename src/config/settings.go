@@ -1,10 +1,17 @@
 package config
 
+import "time"
+
 type Settings struct {
-	Env  string `json:"app_env"`
-	Name string `json:"app_name"`
-	Port int    `json:"app_port"`
-	Logs Logs   `json:"logs"`
+	Env  string       `json:"app_env"`
+	Name string       `json:"app_name"`
+	Port int          `json:"app_port"`
+	Auth AuthSettings `json:"auth"`
+	Logs Logs         `json:"logs"`
+}
+
+type AuthSettings struct {
+	TokenValidity time.Duration `json:"token_validity"`
 }
 
 type Logs struct {
