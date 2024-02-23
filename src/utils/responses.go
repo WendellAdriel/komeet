@@ -28,6 +28,10 @@ func UnauthorizedResponse(c *gin.Context) {
 	})
 }
 
+func NoContentResponse(c *gin.Context) {
+	c.JSON(http.StatusNoContent, nil)
+}
+
 func parseError(errs ...error) []string {
 	var out []string
 	for _, err := range errs {
