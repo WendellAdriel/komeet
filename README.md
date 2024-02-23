@@ -1,6 +1,7 @@
 <div align="center">
     <h1>Komeet ☄️</h1>
     <p><strong>API Template built with Go and Gin</strong></p>
+    <p><img alt="Static Badge" src="https://img.shields.io/badge/IN%20DEVELOPMENT-FFA200"></p>
 </div>
 
 ## Using the Template
