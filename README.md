@@ -1,8 +1,28 @@
 <div align="center">
     <h1>Komeet ☄️</h1>
     <p><strong>API Template built with Go and Gin</strong></p>
-    <p><img alt="Static Badge" src="https://img.shields.io/badge/IN%20DEVELOPMENT-FFA200"></p>
 </div>
+
+**Komeet** is a simple, but powerful API template to start your APIs with **Go**.
+It uses **Gin** and **Cobra** as the base dependencies for creating a lightweight and
+fast API. It comes with a lot of things out-of-the-box, so you can focus on your API
+instead of worrying on how to build the base architecture for it.
+
+## Features
+
+- Login endpoint using JWT
+- Logout endpoint to invalidate token
+- Logged User Profile endpoint
+- Auth Middleware
+- Clean Architecture
+- API versioning
+- Mapping Requests to DTOs
+- Create User command to help on development
+- Configuration and Secrets using JSON format
+- File logging with file rotation (Zerolog + Lumberjack)
+- Models using GORM with DB migration configured
+- Standard API responses
+- Fallback route and error recovery configured
 
 ## Using the Template
 

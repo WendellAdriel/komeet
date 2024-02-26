@@ -61,6 +61,9 @@ func parseFieldError(e validator.FieldError) string {
 	case "required":
 		return fmt.Sprintf("%s is required", fieldPrefix)
 
+	case "required_with":
+		return fmt.Sprintf("%s is required if %s is supplied", fieldPrefix, e.Param())
+
 	case "required_without":
 		return fmt.Sprintf("%s is required if %s is not supplied", fieldPrefix, e.Param())
 

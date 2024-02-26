@@ -14,5 +14,4 @@ func RegisterRoutes() {
 
 	protectedRoutes.POST("logout", v1.Logout)
 	protectedRoutes.GET("me", v1.Profile)
-	protectedRoutes.PUT("me", v1.EditProfile)
 }
